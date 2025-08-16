@@ -1,32 +1,45 @@
-import Mapbox from "@rnmapbox/maps";
-import React from "react";
-import { StyleSheet, View } from "react-native";
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ */
 
-Mapbox.setAccessToken("<YOUR_ACCESSTOKEN>");
+import { NewAppScreen } from '@react-native/new-app-screen';
+import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
 
-const App = () => {
+function App() {
+  const isDarkMode = useColorScheme() === 'dark';
+
   return (
-    <View style={styles.page}>
-      <View style={styles.container}>
-        <Mapbox.MapView style={styles.map} />
-      </View>
+    <SafeAreaProvider>
+      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <AppContent />
+    </SafeAreaProvider>
+  );
+}
+
+function AppContent() {
+  const safeAreaInsets = useSafeAreaInsets();
+
+  return (
+    <View style={styles.container}>
+      <NewAppScreen
+        templateFileName="App.tsx"
+        safeAreaInsets={safeAreaInsets}
+      />
     </View>
   );
-};
-
-export default App;
+}
 
 const styles = StyleSheet.create({
-  page: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
   container: {
-    height: 300,
-    width: 300,
-  },
-  map: {
     flex: 1,
   },
 });
+
+export default App;
